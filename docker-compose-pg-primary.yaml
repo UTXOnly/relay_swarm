@@ -1,0 +1,46 @@
+
+services:
+  postgres-primary:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    configs:
+      - source: config_primary_region.conf
+        target: /etc/postgresql/postgresql.conf
+        mode: 0444
+      - source: config_pg_hba.conf
+        target: /etc/postgresql/data/pg_hba.conf
+        mode: 0444
+    volumes:
+      - pgdata-primary:/var/lib/postgresql/data
+    networks:
+      - my-overlay-network
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+        mode: host
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.labels.role == dbprimary]
+      restart_policy:
+        condition: on-failure
+
+networks:
+  my-overlay-network:
+    driver: overlay
+    attachable: true
+    external: true
+
+volumes:
+  pgdata-primary:
+
+configs:
+  config_primary_region.conf:
+    external: true
+  config_pg_hba.conf:
+    external: true

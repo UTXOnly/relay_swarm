@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  nostr-relay-primary:
+    image: bhartford419/nostr-rs-relay:primary_hc_svc
+    user: "100:100"
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    networks:
+      - my-overlay-network
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+          - node.labels.region == useast
+      restart_policy:
+        condition: on-failure
+
+  nostr-relay-secondary:
+    image: bhartford419/nostr-rs-relay:secondary_hc_svc
+    user: "100:100"
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    networks:
+      - my-overlay-network
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+          - node.labels.region == asia
+      restart_policy:
+        condition: on-failure
+
+  nginx-primary:
+    image: bhartford419/nginx-certbot:primary_hc
+    environment:
+      - DOMAIN=3z.serverless-nostr.com
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    volumes:
+      - certs:/etc/letsencrypt
+      - certs-data:/var/lib/letsencrypt
+    networks:
+      - my-overlay-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+          - node.labels.region == useast
+      restart_policy:
+        condition: on-failure
+        max_attempts: 2
+
+  nginx-secondary:
+    image: bhartford419/nginx-certbot:secondary_hc
+    environment:
+      - DOMAIN=3z.serverless-nostr.com
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    volumes:
+      - certs:/etc/letsencrypt
+      - certs-data:/var/lib/letsencrypt
+    networks:
+      - my-overlay-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+          - node.labels.region == asia
+      restart_policy:
+        condition: on-failure
+        max_attempts: 2
+
+networks:
+  my-overlay-network:
+    driver: overlay
+    attachable: true
+    external: true
+
+volumes:
+  certs:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=172.31.43.246,rw"
+      device: ":/nfs/certs"
+  certs-data:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=172.31.43.246,rw"
+      device: ":/nfs/certs-data"
+  pgdata:
+    driver: local

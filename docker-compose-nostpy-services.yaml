@@ -1,0 +1,71 @@
+
+services:
+  primary_websocket_handler:
+    image: bhartford419/nostpy-ws-handler:v3
+    environment:
+      - DD_SERVICE=websocket_handler
+      - DD_ENV=swarm2
+      - DD_LOGS_INJECTION=true
+      - DD_PROFILING_ENABLED=true
+      - DD_RUNTIME_METRICS_ENABLED=true
+      - DD_AGENT_HOST=datadog-agent
+      - DD_APPSEC_ENABLED=true
+    ports:
+      - target: 8008
+        published: 8008
+        protocol: tcp
+        mode: ingress
+    networks:
+      - my-overlay-network
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+          - node.labels.region == useast
+
+  primary_event_handler:
+    image: bhartford419/nostpy-eh-handler:v1
+    environment:
+      - DD_SERVICE=event_handler
+      - DD_AGENT_HOST=datadog-agent
+      - DD_DBM_PROPAGATION_MODE=full
+      - DD_ENV=swarm2
+      - DD_LOGS_INJECTION=true
+      - DD_PROFILING_ENABLED=true
+      - DD_RUNTIME_METRICS_ENABLED=true
+      - DD_APPSEC_ENABLED=true
+    networks:
+      - my-overlay-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - target: 8009
+        published: 8009
+        protocol: tcp
+        mode: ingress
+
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+          - node.labels.region == useast
+
+
+networks:
+  my-overlay-network:
+    driver: overlay
+    attachable: true
+    external: true
+
+volumes:
+  certs:
+    external: true
+  certs-data:
+    external: true
+  pgdata:
+    driver: local
