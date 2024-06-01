@@ -38,9 +38,9 @@ services:
       - DD_APPSEC_ENABLED=true
     networks:
       - my-overlay-network
-    depends_on:
-      postgres-primary:
-        condition: service_healthy
+    #depends_on:
+    #  postgres-primary:
+    #    condition: service_healthy
     ports:
       - target: 8009
         published: 8009
