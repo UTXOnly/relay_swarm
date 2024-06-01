@@ -3,7 +3,7 @@
 services:
 
   nginx-primary:
-    image: bhartford419/nginx-certbot:nostpyv1
+    image: bhartford419/nginx-certbot:nostpyv2
     environment:
       - DOMAIN=3z.serverless-nostr.com
       - DOCKER_SVC=primary_websocket_handler
