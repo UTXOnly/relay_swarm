@@ -61,11 +61,3 @@ networks:
     driver: overlay
     attachable: true
     external: true
-
-volumes:
-  certs:
-    external: true
-  certs-data:
-    external: true
-  pgdata:
-    driver: local
