@@ -16,8 +16,8 @@ services:
         protocol: tcp
         mode: host
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-      - /var/lib/letsencrypt:/var/lib/letsencrypt
+      - ./letsencrypt:/etc/letsencrypt
+      - ./lib/letsencrypt:/var/lib/letsencrypt
     networks:
       - my-overlay-network
     deploy:
