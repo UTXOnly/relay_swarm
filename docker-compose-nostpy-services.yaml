@@ -39,7 +39,7 @@ services:
     networks:
       - my-overlay-network
     depends_on:
-      postgres:
+      postgres-primary:
         condition: service_healthy
     ports:
       - target: 8009
