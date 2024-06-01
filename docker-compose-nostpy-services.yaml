@@ -36,6 +36,11 @@ services:
       - DD_PROFILING_ENABLED=true
       - DD_RUNTIME_METRICS_ENABLED=true
       - DD_APPSEC_ENABLED=true
+      - PGDATABASE=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGPORT=5432
+      - PGHOST=postgres-primary
     networks:
       - my-overlay-network
     #depends_on:
