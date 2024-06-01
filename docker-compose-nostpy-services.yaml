@@ -1,7 +1,7 @@
 
 services:
   primary_websocket_handler:
-    image: bhartford419/nostpy-ws-handler:v3
+    image: bhartford419/nostpy-ws-handler:v4
     environment:
       - DD_SERVICE=websocket_handler
       - DD_ENV=swarm2
