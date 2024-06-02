@@ -26,7 +26,7 @@ services:
           - node.labels.region == useast
 
   primary_event_handler:
-    image: bhartford419/nostpy-eh-handler:v1
+    image: bhartford419/nostpy-eh-handler:v2
     environment:
       - DD_SERVICE=event_handler
       - DD_AGENT_HOST=datadog-agent
