@@ -60,6 +60,16 @@ services:
           - node.role == worker
           - node.labels.region == useast
 
+  redis-primary:
+    image: redis:latest
+    ports:
+      - target: 6379
+        published: 6379
+        protocol: tcp
+        mode: ingress
+    networks:
+      - my-overlay-network
+
 
 networks:
   my-overlay-network:
