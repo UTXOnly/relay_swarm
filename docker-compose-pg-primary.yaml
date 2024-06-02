@@ -27,7 +27,6 @@ services:
       placement:
         constraints: [node.labels.role == dbprimary]
 
-
 networks:
   my-overlay-network:
     driver: overlay
