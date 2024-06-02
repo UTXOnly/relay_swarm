@@ -1,3 +1,4 @@
+
 services:
   postgres-primary:
     image: postgres:16
@@ -14,7 +15,7 @@ services:
         target: /etc/postgresql/data/pg_hba.conf
         mode: 0444
     volumes:
-      - ./pgdata-primary:/var/lib/postgresql/data
+      - pgdata-primary:/var/lib/postgresql/data
     networks:
       - my-overlay-network
     ports:
@@ -22,16 +23,23 @@ services:
         published: 5432
         protocol: tcp
         mode: host
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+
     deploy:
       mode: global
       placement:
         constraints: [node.labels.role == dbprimary]
+      restart_policy:
+        condition: on-failure
 
 networks:
   my-overlay-network:
     driver: overlay
     attachable: true
     external: true
+
+volumes:
+  pgdata-primary:
 
 configs:
   config_primary_region.conf:
