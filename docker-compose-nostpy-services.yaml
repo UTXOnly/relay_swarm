@@ -67,6 +67,12 @@ services:
         published: 6379
         protocol: tcp
         mode: ingress
+    deploy:
+      mode: replicated
+      replicas: 2
+      placement:
+        constraints:
+          - node.labels.region == useast
     networks:
       - my-overlay-network
 
