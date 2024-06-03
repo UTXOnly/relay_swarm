@@ -1,0 +1,48 @@
+
+
+services:
+
+  nginx-secondary:
+    image: bhartford419/nginx-certbot:nostpyv4
+    environment:
+      - DOMAIN=stg.serverless-nostr.com
+      - DOCKER_SVC=primary_websocket_handler
+      - SVC_PORT=8008
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    volumes:
+      - ./letsencrypt:/etc/letsencrypt
+      - ./lib/letsencrypt:/var/lib/letsencrypt
+    networks:
+      - my-overlay-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+          - node.labels.region == useast
+      restart_policy:
+        condition: on-failure
+        max_attempts: 2
+
+
+networks:
+  my-overlay-network:
+    driver: overlay
+    attachable: true
+    external: true
+
+#volumes:
+#  certs:
+#    external: true
+#  certs-data:
+#    external: true
+
