@@ -23,14 +23,13 @@ services:
         published: 5432
         protocol: tcp
         mode: host
-    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/data/pg_hba.conf"]
 
     deploy:
       mode: global
       placement:
         constraints: [node.labels.role == dbprimary]
-      restart_policy:
-        condition: on-failure
+
 
 networks:
   my-overlay-network:
