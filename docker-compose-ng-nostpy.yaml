@@ -5,7 +5,7 @@ services:
   nginx-primary:
     image: bhartford419/nginx-certbot:nostpyv4
     environment:
-      - DOMAIN=3z.serverless-nostr.com
+      - DOMAIN=stg.serverless-nostr.com
       - DOCKER_SVC=primary_websocket_handler
       - SVC_PORT=8008
     ports:
