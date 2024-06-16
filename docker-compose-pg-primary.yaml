@@ -32,7 +32,7 @@ services:
 
 
 networks:
-  my-overlay-network:
+  swarm-overlay-network:
     driver: overlay
     attachable: true
     external: true
