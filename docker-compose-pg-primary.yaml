@@ -31,12 +31,6 @@ services:
         constraints: [node.labels.role == dbprimary]
 
 
-networks:
-  swarm-overlay-network:
-    driver: overlay
-    attachable: true
-    external: true
-
 volumes:
   pgdata-primary:
 
