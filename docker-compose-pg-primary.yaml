@@ -21,7 +21,7 @@ services:
       - target: 5432
         published: 5432
         protocol: tcp
-        mode: host
+        mode: ingress
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/data/pg_hba.conf"]
 
     deploy:
