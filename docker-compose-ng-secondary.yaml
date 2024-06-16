@@ -1,9 +1,7 @@
-
-
 services:
 
   nginx-secondary:
-    image: bhartford419/nginx-certbot:nostpyv4
+    image: bhartford419/nginx-certbot:alpine
     environment:
       - DOMAIN=stg.serverless-nostr.com
       - DOCKER_SVC=primary_websocket_handler
@@ -21,7 +19,7 @@ services:
       - ./letsencrypt:/etc/letsencrypt
       - ./lib/letsencrypt:/var/lib/letsencrypt
     networks:
-      - my-overlay-network
+      - swarm-overlay-network
     deploy:
       mode: replicated
       replicas: 1
@@ -35,7 +33,7 @@ services:
 
 
 networks:
-  my-overlay-network:
+  swarm-overlay-network:
     driver: overlay
     attachable: true
     external: true

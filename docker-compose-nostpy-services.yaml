@@ -1,22 +1,16 @@
 
 services:
   primary_websocket_handler:
-    image: bhartford419/nostpy-ws-handler:v5
+    image: bhartford419/nostpy-ws-handler:latest
     environment:
-      - DD_SERVICE=websocket_handler
-      - DD_ENV=swarm2
-      - DD_LOGS_INJECTION=true
-      - DD_PROFILING_ENABLED=true
-      - DD_RUNTIME_METRICS_ENABLED=true
-      - DD_AGENT_HOST=datadog-agent
-      - DD_APPSEC_ENABLED=true
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://opentelemetry-collector:4317
     ports:
       - target: 8008
         published: 8008
         protocol: tcp
         mode: ingress
     networks:
-      - my-overlay-network
+      - swarm-overlay-network
     deploy:
       mode: replicated
       replicas: 3
@@ -26,26 +20,18 @@ services:
           - node.labels.region == useast
 
   primary_event_handler:
-    image: bhartford419/nostpy-eh-handler:v2
+    image: bhartford419/nostpy-eh-handler:latest
     environment:
-      - DD_SERVICE=event_handler
-      - DD_AGENT_HOST=datadog-agent
-      - DD_DBM_PROPAGATION_MODE=full
-      - DD_ENV=swarm2
-      - DD_LOGS_INJECTION=true
-      - DD_PROFILING_ENABLED=true
-      - DD_RUNTIME_METRICS_ENABLED=true
-      - DD_APPSEC_ENABLED=true
-      - PGDATABASE=postgres
-      - PGUSER=postgres
-      - PGPASSWORD=postgres
-      - PGPORT=5432
-      - PGHOST=postgres-primary
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://opentelemetry-collector:4317
+      - REDIS_HOST=${REDIS_HOST}
+      - PGDATABASE=${PGDATABASE}
+      - PGUSER=${PGUSER}
+      - PGPASSWORD=${PGPASSWORD}
+      - PGPORT=${PGPORT}
+      - PGHOST=${PGHOST}
     networks:
-      - my-overlay-network
-    #depends_on:
-    #  postgres-primary:
-    #    condition: service_healthy
+      - swarm-overlay-network
+
     ports:
       - target: 8009
         published: 8009
@@ -74,11 +60,11 @@ services:
         constraints:
           - node.labels.region == useast
     networks:
-      - my-overlay-network
+      - swarm-overlay-network
 
 
 networks:
-  my-overlay-network:
+  swarm-overlay-network:
     driver: overlay
     attachable: true
     external: true

@@ -1,5 +1,4 @@
 
-
 services:
 
   nginx-primary:
@@ -21,7 +20,7 @@ services:
       - ./letsencrypt:/etc/letsencrypt
       - ./lib/letsencrypt:/var/lib/letsencrypt
     networks:
-      - my-overlay-network
+      - swarm-overlay-network
     deploy:
       mode: replicated
       replicas: 1
@@ -40,9 +39,5 @@ networks:
     attachable: true
     external: true
 
-#volumes:
-#  certs:
-#    external: true
-#  certs-data:
-#    external: true
+
 

@@ -5,7 +5,7 @@ receivers:
       grpc:
 
   docker_stats:
-    endpoint: unix:///var/run/docker.sock # (default)
+    endpoint: unix:///var/run/docker.sock
     metrics:
       container.network.io.usage.rx_packets:
         enabled: true
@@ -99,8 +99,8 @@ processors:
           enabled: true
   attributes:
     actions:
-      - key: service.instance.id
-        value: "my-manual-hostname"
+      - key: deployment.environment
+        value: nostpy-swarm-otel
         action: upsert
 
 connectors:
@@ -110,7 +110,7 @@ exporters:
   datadog/exporter:
     api:
       site: datadoghq.com
-      key: 58d81280004707276acc790257b8f1c4
+      key: ${DD_API_KEY}
     traces:
       trace_buffer: 500
 
