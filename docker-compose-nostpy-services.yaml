@@ -9,7 +9,7 @@ services:
       - target: 8008
         published: 8008
         protocol: tcp
-        mode: ingress
+        mode: host
     networks:
       - swarm-overlay-network
     deploy:
