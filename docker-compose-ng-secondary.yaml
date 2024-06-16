@@ -5,7 +5,7 @@ services:
     environment:
       - DOMAIN=stg.serverless-nostr.com
       - DOCKER_SVC=primary_websocket_handler
-      - SVC_PORT=8008
+      - SVC_PORT=800
     ports:
       - target: 80
         published: 80
