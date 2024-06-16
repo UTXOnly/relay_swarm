@@ -20,7 +20,7 @@ services:
       placement:
         constraints:
           - node.role == worker
-          - node.labels.region == useast
+          - node.labels.region == eucentral
 
   secondary_event_handler:
     image: bhartford419/nostpy-eh-handler:latest
@@ -54,7 +54,7 @@ services:
       placement:
         constraints:
           - node.role == worker
-          - node.labels.region == useast
+          - node.labels.region == eucentral
 
   redis-secondary:
     image: redis:latest
@@ -68,7 +68,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.region == useast
+          - node.labels.region == eucentral
     networks:
       - swarm-overlay-network
 
