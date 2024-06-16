@@ -37,8 +37,8 @@ services:
       - PGDATABASE_READ=postgres
       - PGUSER_READ=postgres
       - PGPASSWORD_READ=postgres
-      - PGPORT_READ=5433
-      - PGHOST_READ=postgres-secondary
+      - PGPORT_READ=5432
+      - PGHOST_READ=postgres-primary
     networks:
       - swarm-overlay-network
 
