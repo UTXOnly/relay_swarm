@@ -29,7 +29,7 @@ services:
       - PGUSER=postgres
       - PGPASSWORD=postgres
       - PGPORT=5432
-      - PGHOST=postgres
+      - PGHOST=172.31.38.172
     networks:
       - swarm-overlay-network
 
