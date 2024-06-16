@@ -18,8 +18,8 @@ services:
     networks:
       - swarm-overlay-network
     ports:
-      - target: 5432
-        published: 5432
+      - target: 5433
+        published: 5433
         protocol: tcp
         mode: host
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/data/pg_hba.conf"]

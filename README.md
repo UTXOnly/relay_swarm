@@ -14,6 +14,7 @@ docker network create --driver overlay --attachable swarm-overlay-network
 docker stack deploy -c docker-compose-pg-primary.yaml primary-db
 docker stack deploy -c docker-compose-pg-secondary.yaml secondary-db
 docker stack deploy -c docker-compose-nostpy-services.yaml relay-nostpy-services
+docker stack deploy -c docker-compose-nostpy-secondary.yaml relay-nostpy-secondary
 docker stack deploy -c docker-compose-otel.yaml opentelemetry-stack
 docker stack deploy -c docker-compose-ng-nostpy.yaml ng-nostpy
 ```
