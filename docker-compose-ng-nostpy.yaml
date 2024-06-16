@@ -8,7 +8,7 @@ services:
       - DOCKER_SVC=primary_websocket_handler
       - SVC_PORT=8008
       - VERSION=1.0.0
-      - CONTACT=bh419@protonmail.com
+      - CONTACT="bh419@protonmail.com"
       - HEX_PUBKEY=4503baa127bdfd0b054384dc5ba82cb0e2a8367cbdb0629179f00db1a34caacc
     ports:
       - target: 80
