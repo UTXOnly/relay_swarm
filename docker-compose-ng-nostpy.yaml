@@ -2,7 +2,7 @@
 services:
 
   nginx-primary:
-    image: bhartford419/nginx-certbot:nostpyv4
+    image: bhartford419/nginx-certbot:alpine
     environment:
       - DOMAIN=stg.serverless-nostr.com
       - DOCKER_SVC=primary_websocket_handler
