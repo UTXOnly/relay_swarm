@@ -29,7 +29,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          #- node.role == manager
+          - node.role == worker
           - node.labels.region == useast
 
 
