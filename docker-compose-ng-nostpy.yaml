@@ -1,6 +1,6 @@
-version: '3.8'
 
 services:
+
   nginx-primary:
     image: bhartford419/nginx-certbot:alpine
     environment:
@@ -20,8 +20,8 @@ services:
         protocol: tcp
         mode: host
     volumes:
-      - /home/ubuntu/relay_swarm/letsencrypt:/etc/letsencrypt
-      - /home/ubuntu/relay_swarm/lib/letsencrypt:/var/lib/letsencrypt
+      - ./letsencrypt:/etc/letsencrypt
+      - ./lib/letsencrypt:/var/lib/letsencrypt
     networks:
       - swarm-overlay-network
     deploy:
@@ -32,8 +32,13 @@ services:
           - node.role == manager
           - node.labels.region == useast
 
+
+
 networks:
   swarm-overlay-network:
     driver: overlay
     attachable: true
     external: true
+
+
+
