@@ -17,7 +17,7 @@ services:
     volumes:
       - pgdata-primary:/var/lib/postgresql/data
     networks:
-      - my-overlay-network
+      - swarm-overlay-network
     ports:
       - target: 5432
         published: 5432
