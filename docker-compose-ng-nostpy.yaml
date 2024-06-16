@@ -33,7 +33,6 @@ services:
           - node.labels.region == useast
 
 
-
 networks:
   swarm-overlay-network:
     driver: overlay

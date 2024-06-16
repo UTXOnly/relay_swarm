@@ -26,10 +26,7 @@ services:
       placement:
         constraints:
           - node.role == manager
-          - node.labels.region == useast
-      restart_policy:
-        condition: on-failure
-        max_attempts: 2
+          - node.labels.region == eucentral
 
 
 networks:
