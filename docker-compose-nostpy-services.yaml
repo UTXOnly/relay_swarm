@@ -63,3 +63,8 @@ services:
       - swarm-overlay-network
 
 
+networks:
+  swarm-overlay-network:
+    driver: overlay
+    attachable: true
+    external: true

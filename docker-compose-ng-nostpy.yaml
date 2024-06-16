@@ -36,6 +36,11 @@ services:
         max_attempts: 2
 
 
+networks:
+  swarm-overlay-network:
+    driver: overlay
+    attachable: true
+    external: true
 
 
 

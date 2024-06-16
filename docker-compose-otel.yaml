@@ -26,6 +26,11 @@ services:
     networks:
       - swarm-overlay-network
 
+networks:
+  swarm-overlay-network:
+    driver: overlay
+    attachable: true
+    external: true
 
 configs:
   opentelemetry-config:
