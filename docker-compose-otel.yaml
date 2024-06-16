@@ -23,12 +23,8 @@ services:
         reservations:
           cpus: '0.25'
           memory: 250M
-
-networks:
-  swarm-overlay-network:
-    driver: overlay
-    attachable: true
-    external: true
+    networks:
+      - swarm-overlay-network
 
 configs:
   opentelemetry-config:
