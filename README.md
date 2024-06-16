@@ -13,7 +13,6 @@ docker network create --driver overlay --attachable my-overlay-network
 ```bash
 docker stack deploy -c docker-compose-pg-primary.yaml primary-db
 docker stack deploy -c docker-compose-pg-secondary.yaml secondary-db
-docker stack deploy -c docker-compose-relay-ng.yaml relay-ng-stack
 docker stack deploy -c docker-compose-nostpy-services.yaml relay-nostpy-services
 docker stack deploy -c docker-compose-otel.yaml opentelemetry-stack
 ```
